@@ -1,0 +1,72 @@
+.board {
+  width: 750px;
+  height: 750px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.start-line {
+  position: absolute;
+  top: 675px;
+  display: flex;
+}
+
+.road-lines {
+  position: absolute;
+  top: 375px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grass-line {
+  position: absolute;
+  top: 300px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.water-lines {
+  position: absolute;
+  top: 0px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.goal-line {
+  position: absolute;
+  top: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+.frog {
+  position: absolute;
+  height: 76px;
+  width: 55px;
+  background: url("../images/frog-sprite-forward.png") 0px 0px;
+  z-index: 2;
+}
+
+.grass {
+  position: absolute;
+  height: 75px;
+  width: 75px;
+  background: url("../images/grass.png") 0px 0px;
+}
+
+.road {
+  position: absolute;
+  height: 75px;
+  width: 75px;
+  background: url("../images/road.png") 0px 0px;
+}
+
+.water {
+  position: absolute;
+  height: 75px;
+  width: 75px;
+  background: url("../images/water.png") 0px 0px;
+}

@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Cross</title>
-    <link rel="stylesheet" href="./statics/style/index.css">
-    <link rel="shortcut icon" href="./statics/media/img/galaxyCross.png" type="image/x-icon">
-</head>
-<body>
-    <main>
-        <div>
-            <canvas id="mi-canvas" width="500" height="500"></canvas>
-            <br/>
-            <button id="up">⬆</button>
-            <br/>
-            <button id="left">⏪</button>
-            <button id="right">⏩</button>
-            <br/>
-            <button id="down">⬇</button>
-        </div>
-    </main>
-    <script src="./dynamics/JS/index.js"></script>
-</body>
+<html>
+  <head>
+    <link rel="stylesheet" href="statics/styles/style.css" />
+    <title>Frogger game</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div id="div-board" class="board" tabindex="0">
+      <div id="div-goal" class="goal-line"></div>
+      <div id="div-water" class="water-lines"></div>
+      <div id="div-grass" class="grass-line"></div>
+      <div id="div-road" class="road-lines"></div>
+      <div id="div-start" class="start-line"></div>
+      <div id="div-frog" class="frog" style="top: 675px"></div>
+    </div>
+    <!-- <img src="./statics/images/frogger-game.png" alt="" /> -->
+    <script src="dynamics/index.js"></script>
+  </body>
 </html>
