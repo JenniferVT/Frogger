@@ -117,6 +117,7 @@ window.setInterval(()=>{
     {
         roca = 1;
         //console.log(roca);
+        
     }
     if(control == 10)
     {
