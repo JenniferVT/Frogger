@@ -72,18 +72,18 @@ function nave()
 
 window.setInterval(()=>{
     static();
-    // Para que la nave no se pase de los límites del canvas
-    console.log(canvas.width / 7);
-    console.log(xNave);
     // if(yNave <= canvas.height / 10 && xNave + 50 >= 71.42857142857143 && xNave + 50 <= 71.42857142857143 * 2 ||  yNave <= canvas.height / 10 && xNave >= 71.42857142857143 * 3 && xNave <= 71.42857142857143 * 4)
     // {
     //     yNave = canvas.height / 10;
     // }
+    // Para que la nave no se pase de los límites del canvas
+    //Ha ganado
     if(yNave <= canvas.height / 10 && xNave + 50 >= canvas.width / 7 && xNave <= canvas.width / 7 * 2 || yNave <= canvas.height / 10 && xNave + 50 >= canvas.width / 7 * 3 && xNave <= canvas.width / 7 * 4 || yNave <= canvas.height / 10 && xNave + 50 >= canvas.width / 7 * 5 && xNave <= canvas.width / 7 * 6)
     {
         yNave = canvas.height / 10;
+        //Sonido de ganador
     }
-    if(yNave <= canvas.height / 10 * 2 && xNave + 50 >= 0 && xNave <= canvas.width / 7 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 2 && xNave <= canvas.width / 7 * 3 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 6 && xNave <= canvas.width / 7 * 7)
+    if(yNave <= canvas.height / 10 * 2 && xNave + 50 >= 0 && xNave <= canvas.width / 7 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 2 && xNave <= canvas.width / 7 * 3 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 4 && xNave <= canvas.width / 7 * 5 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 6 && xNave <= canvas.width / 7 * 7)
     {
         yNave = canvas.height / 10 * 2;
     }
@@ -99,9 +99,7 @@ window.setInterval(()=>{
     {
         xNave = 500 - 50;
     }
-    //Colisión con obstáculos
-
-
+    
     //Movimiento de nave
     if(naveOnU == 1)
     {
@@ -152,12 +150,20 @@ window.setInterval(()=>{
     if(control == 5)
     {
         roca = 1;
-        //console.log(roca);
-        
+        //console.log(roca);        
     }
     if(control == 10)
     {
         control = 0;
         roca = 0;
     }
+    //Colisión con obstáculos
+    console.log(yUfo);
+    console.log(yNave);
+    if(yNave <= yUfo + 45 && yNave + 45 >= yUfo + 45)
+    {
+        ctx.fillStyle = "#F54936";
+        ctx.fillRect(225, 225, 50, 50);
+    }
+
 }, tempo);
