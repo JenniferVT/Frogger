@@ -1,12 +1,26 @@
 const canvas = document.getElementById("mi-canvas");
 const ctx = canvas.getContext("2d");
 
-const naveEspacial = new Image(100, 100);
-naveEspacial.src = "./statics/media/img/avion.png";
+const naveEspacial = new Image();
+naveEspacial.src = "./statics/media/img/avionSprites.png";
 naveEspacial.addEventListener('load', ()=>{
-    console.log("Ya cargó");
-    ctx.drawImage(naveEspacial, 225, 225, 50, 45);
-})
+    console.log("Ya cargó nave espacial");
+});
+const fondo = new Image();
+fondo.src = "./statics/media/img/space.jpg";
+fondo.addEventListener('load', ()=>{
+    console.log("Ya cargó fondo");
+});
+const ovni = new Image();
+ovni.src = "./statics/media/img/ufo.png";
+ovni.addEventListener('load', ()=>{
+    console.log("Ya cargó UFO");
+});
+const acaba  = new Audio("./statics/media/sounds/end.mp3");
+const choca  = new Audio("./statics/media/sounds/chocar.mp3");
+const musicaFondo  = new Audio("./statics/media/sounds/ringtones-got-theme.mp3");
+const madre = document.getElementById("madre");
+const empezaraJ = document.getElementById("empezaraJ");
 // const up = document.getElementById("up");
 // const left = document.getElementById("left");
 // const right = document.getElementById("right");
@@ -45,12 +59,25 @@ let naveOnL = 0;
 let naveOnR = 0;
 let naveOnD = 0;
 let vidas = 3;
-let pausa = 0;
+let aJugar = false;
+let vez = 0;
 let juego;
+let temporizador = 0;
+let duracion = 0;
+let empiezaDeNuevo;
+let direccionNave = [0, 15, 90, 97, 244, 11, 103, 95, 125, 130, 97, 92, 517, 20, 95, 97];
+let llaveCero;
+let llaveUno;
+let llaveDos;
+let llaveTres;
+let anchOvni = 100;
+let altOvni = 20;
+
 function static()
 {
     ctx.fillStyle = "#D398EB"
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(fondo, 0, 0, 960, 640, 0, 0, canvas.width, canvas.height);
     //Informacipon de tiempo y record
     ctx.fillStyle = "#B489E9"
     ctx.fillRect(0, 0, canvas.width, canvas.height / 10);
@@ -69,40 +96,68 @@ function static()
     ctx.textAlign = "center";
     ctx.fillText("Tiempo:", canvas.width / 4, 30);
     ctx.fillText("Vidas:", canvas.width / 4 * 2, 30);
+    ctx.fillText(vidas, canvas.width / 4 * 2 + 50, 30);
     ctx.fillText("Record:", canvas.width / 4 * 3, 30);
-
+    musicaFondo.volume = 0.1;
+    musicaFondo.play();
 }
 //Detección de elementos de teclado
 window.addEventListener("keypress", (evento) =>{
-    if(evento.key == "w" || evento.key == "W")
+    
+    if(evento.key == "p" || evento.key == "P")
     {
-        naveOnU = 1;
+        aJugar = true;
+        empezaraJ.style.display = "none";
     }
-    if(evento.key == "a" || evento.key == "A")
+    if(aJugar == true)
     {
-        naveOnL = 1;
-    }
-    if(evento.key == "d" || evento.key == "D")
-    {
-        naveOnR = 1;
-    }
-    if(evento.key == "s" || evento.key == "S")
-    {
-        naveOnD = 1;
-    }
-    if(evento.key == 32)
-    {
-        pausa = 1;
+        vez++;
+        console.log("Pausa");
+        canvas.style.display = "block";
+        if(evento.key == "w" || evento.key == "W")
+        {
+            naveOnU = 1;
+            //Imagen direccion dada por estas localidades
+            llaveCero = 0;
+            llaveUno = 1;
+            llaveDos = 2;
+            llaveTres = 3;
+        }
+        if(evento.key == "a" || evento.key == "A")
+        {
+            naveOnL = 1;
+            //Imagen direccion dada por estas localidades
+            llaveCero = 4;
+            llaveUno = 5;
+            llaveDos = 6;
+            llaveTres = 7;
+        }
+        if(evento.key == "d" || evento.key == "D")
+        {
+            naveOnR = 1;
+            //Imagen direccion dada por estas localidades
+            llaveCero = 8;
+            llaveUno = 9;
+            llaveDos = 10;
+            llaveTres = 11;
+        }
+        if(evento.key == "s" || evento.key == "S")
+        {
+            naveOnD = 1;
+            //Imagen direccion dada por estas localidades
+            llaveCero = 12;
+            llaveUno = 13;
+            llaveDos = 14;
+            llaveTres = 15;
+        }
     }
 });
 function nave()
 {
-    ctx.fillStyle = "#164285";
-    ctx.fillRect(xNave, yNave, 50, 45);
+    ctx.drawImage(naveEspacial, direccionNave[llaveCero], direccionNave[llaveUno], direccionNave[llaveDos], direccionNave[llaveTres], xNave, yNave, 50, 45);
 }
 
 juego = window.setInterval(()=>{
-    
         static();
         // if(yNave <= canvas.height / 10 && xNave + 50 >= 71.42857142857143 && xNave + 50 <= 71.42857142857143 * 2 ||  yNave <= canvas.height / 10 && xNave >= 71.42857142857143 * 3 && xNave <= 71.42857142857143 * 4)
         // {
@@ -114,6 +169,16 @@ juego = window.setInterval(()=>{
         {
             yNave = canvas.height / 10;
             //Sonido de ganador
+            empiezaDeNuevo =  confirm("¡¡¡¡Has ganado!!!!");
+            vidas = 3;
+            duracion = 0;
+            temporizador = 0;
+            clearInterval(juego);
+            if(empiezaDeNuevo == true)
+            {
+                console.log("Termina");
+                window.location = "./index.html";
+            }
         }
         if(yNave <= canvas.height / 10 * 2 && xNave + 50 >= 0 && xNave <= canvas.width / 7 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 2 && xNave <= canvas.width / 7 * 3 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 4 && xNave <= canvas.width / 7 * 5 || yNave <= canvas.height / 10 * 2 && xNave + 50 >= canvas.width / 7 * 6 && xNave <= canvas.width / 7 * 7)
         {
@@ -157,13 +222,16 @@ juego = window.setInterval(()=>{
         nave();
         //Obstáculos
         ctx.fillStyle = "#666970";
-        ctx.fillRect(xUfo, yUfo, 50, 45);
+        //ctx.fillRect(xUfo, yUfo, 50, 45);
+        ctx.drawImage(ovni, 0, 15, 199, 42, xUfo, yUfo, anchOvni, altOvni);
+        //Mueve el Ovni
         xUfo = xUfo - 2;
         if(roca == 1)
         {
             xRoca = xRoca - 2;
             ctx.fillStyle = "#3BBB59";
-            ctx.fillRect(xRoca, yRoca, 50, 45);
+            //ctx.fillRect(xRoca, yRoca, 50, 45);
+            ctx.drawImage(ovni, 0, 15, 199, 42, xRoca, yRoca, anchOvni, altOvni);
             if(xRoca == 0)
             {
                 xRoca = 500;
@@ -171,7 +239,7 @@ juego = window.setInterval(()=>{
             }
         }
         //Cuando ufo llega al final
-        if(xUfo + 50 == 0)
+        if(xUfo + anchOvni == 0)
         {
             xUfo = 500;
             yUfo = Math.random() * (415 - canvas.height / 10 * 2) + canvas.height / 10 * 2;
@@ -190,18 +258,41 @@ juego = window.setInterval(()=>{
             roca = 0;
         }
         //Colisión con obstáculos
-        console.log(yUfo);
-        console.log(yNave);
-        if(yNave <= yUfo + 45 && yNave + 45 >= yUfo + 45)
+        // Si ( x1 > x2+w2 ) ==> No hay colisión
+        // Si ( x1+w1 < x2 ) ==> No hay colisión
+        // Si ( y1 > y2+h2 ) ==> No hay colisión
+        // Si ( y1+h1 < y2 ) ==> No hay colisión
+        // if(!(x1 > x2+w2) && !(x1+w1 < x2) && !(y1 > y2+h2) && !(y1+h1 < y2))
+        if(!(xNave > xUfo + anchOvni) && !(xNave + 50 < xUfo) && !(yNave > yUfo + altOvni) && !(yNave+45 < yUfo) || !(xNave > xRoca+anchOvni) && !(xNave+50 < xRoca) && !(yNave > yRoca+altOvni) && !(yNave+45 < yRoca))
         {
-            ctx.fillStyle = "#F54936";
-            ctx.fillRect(225, 225, 50, 50);
             vidas--;
+            choca.volume = 0.3;
+            choca.play();
             if(vidas == 0)
             {
-                alert("Has perdido");
+                acaba.volume = 0.2;
+                acaba.play();
+                empiezaDeNuevo = confirm("Has perdido");
                 vidas = 3;
+                duracion = 0;
+                temporizador = 0;
+                clearInterval(juego);
+                if(empiezaDeNuevo == true)
+                {
+                    console.log("Termina");
+                    window.location = "./index.html";
+                }
             }
+            xNave = 250 - 25;
+            yNave = 453;
         }
-    
+        temporizador++;
+        if(temporizador == 200)
+        {
+            duracion++;
+            temporizador = 0;
+        }
+        ctx.fillStyle = "#000000";
+        ctx.font = "20px sans-serif";
+        ctx.fillText(duracion, canvas.width / 4 + 50, 30);
 }, tempo);

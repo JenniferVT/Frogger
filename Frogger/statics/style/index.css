@@ -1,5 +1,5 @@
 body{
-    background-color: aquamarine;
+    background-color: rgb(24, 24, 75);
 }
 main{
     width: 100vw;
@@ -7,4 +7,12 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#empezaraJ{
+    background-color: ghostwhite;
+    padding: 50px;
+    border-radius: 5%;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: bold;
+    color: rgb(24, 24, 75);;
 }
